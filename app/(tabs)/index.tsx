@@ -1,36 +1,42 @@
-import { FlatList, Pressable, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Pressable, StatusBar, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import cn from 'clsx';
 import { Fragment } from "react";
 import { Image } from "react-native";
-import { offers } from "../constants/constants";
+import { offers } from "../../constants/constants";
 
+import CartButton from "@/components/cartButton";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function Index() {
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <View className=" flex-row w-full justify-between my-5 px-5 ">
-        <View className="flex-start">
-          <Text className="text-orange-700 ">DELIVER TO</Text>
-          <TouchableOpacity className="flex-row flex-center gap-x-1 mt-0.5">
-            <Text className="text-base text-dark-100">Croatia</Text>
-            <Ionicons
-              name="arrow-down"
-              size={12}
-              color="black"
-            />
-          </TouchableOpacity>
-        </View>
+      <StatusBar barStyle="dark-content" backgroundColor="white" />
 
-        <Text>
-            Cart
-          </Text>
-      </View>
+     
 
       <FlatList
       data= {offers}
+      keyExtractor={(item) => item.id.toString()}
+      ListHeaderComponent={()=> (
+         /* header part */
+        <View className="flex-row w-full justify-between items-center my-5 px-5">
+          <View className="flex-shrink">
+            <Text className="text-orange-700 text-xs">DELIVER TO</Text>
+            <TouchableOpacity className="flex-row items-center gap-x-1 mt-0.5">
+              <Text className="text-base text-dark-100">Croatiaa</Text>
+              <Ionicons 
+                name="arrow-down"
+                size={12}
+                color="black" 
+              />
+            </TouchableOpacity>
+          </View>
+
+          <CartButton/>
+        </View>
+      )}
       renderItem={({item, index})=> {
         
         const isEven: boolean= index % 2 ===0;
@@ -40,7 +46,7 @@ export default function Index() {
             {/* this is the offer card */}
             <Pressable
             style= {{backgroundColor: item.color}}
-             className= {cn(
+            className= {cn(
               "w-full h-48 my-3 rounded-xl overflow-hidden shadow-lg flex items-center gap-5", 
               isEven ? 'flex-row-reverse' : 'flex-row')}
               android_ripple={{color: '#fffff22' }}
