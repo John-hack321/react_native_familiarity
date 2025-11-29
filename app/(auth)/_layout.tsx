@@ -13,17 +13,19 @@ export default function _layout(){
             <View className="w-full relative" style={[{height: Dimensions.get('screen').height / 2.25}]}>
                 <ImageBackground 
                     source={authImages.background}
-                    className="size-full rounded-b-lg"
+                    className="size-full rounded-b-lg borderBottomLeftRadius: 24, borderBottomRightRadius: 24 "
                     resizeMode="stretch"
                     
                 >
                     {/* we will render our logo within this image too */}
                     <Image 
                     source={authImages.logo}
-                    className="self-center size-28 absolute -bottom-14 rounded-full z-10"
+                    className="self-center size-28 absolute -bottom-6 rounded-full z-10"
                     />
+                    
                 </ImageBackground>
             </View>
+            
 
             <CustomInput
                 placeholder="enter your email"
@@ -31,6 +33,7 @@ export default function _layout(){
                 onChangeText={(text)=> {}}
                 label="Email"
                 keyboardType="email-address"
+                classValues="mt-4"
             />
             <CustomButton/>            
 

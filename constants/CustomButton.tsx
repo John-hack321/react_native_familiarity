@@ -1,11 +1,21 @@
+import { CustomButtonProps } from "@/type";
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity } from "react-native";
 
-const CustomButton= ()=> {
+const CustomButton= ({
+    onPress,
+    title= "submit",
+    style,
+    textStyle,
+    leftIcon,
+    isLoading= false
+}: CustomButtonProps)=> {
     return (
-        <View>
-            <Text>custom button</Text>
-        </View>
+        <TouchableOpacity
+         className="rounded-full w-full py-1 bg-orange-500"
+        >
+            <Text>{title}</Text>
+        </TouchableOpacity>
     )
 }
 

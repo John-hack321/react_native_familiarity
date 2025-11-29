@@ -10,12 +10,13 @@ const CustomInput= ({
     label,
     secureTextEntry= false,
     keyboardType= "default",
+    classValues= ""
 } : customInputProps)=> {
 
     const [isFocused, setIsfocussed]= useState(false)
     return (
-        <View>
-            <Text className="text-sm text-black">{label}</Text>
+        <View className={`w-full ${classValues}`}>
+            <Text className="text-sm text-black mb-2 font-medium">{label}</Text>
             <TextInput
                 autoCapitalize="none"
                 autoCorrect={false}
@@ -27,13 +28,13 @@ const CustomInput= ({
                 onBlur={()=> setIsfocussed(false)}
                 placeholder={placeholder}
                 placeholderTextColor={'#888'}
-                className={cn("px-2 py rounded-lg border-gray-300", 
-                    isFocused ? "border-orange-500" : "border-gray-300"
+                className={cn(
+                    ` px-4 py-3 rounded-lg border-2 bg-white", 
+                    isFocused ? "border-orange-500" : "border-gray-300`
                 )}
             />
         </View>
     )
 }
-
 
 export default CustomInput;
