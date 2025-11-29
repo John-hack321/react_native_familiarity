@@ -5,6 +5,7 @@ import { Button, Text, View } from "react-native";
 const SignIn= ()=> {
     return (
         <View>
+            
             <Text>Sigin page</Text>
             <Button 
             title="singUp"

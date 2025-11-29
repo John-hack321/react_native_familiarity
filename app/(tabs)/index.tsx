@@ -14,11 +14,10 @@ export default function Index() {
     <SafeAreaView className="flex-1 bg-white">
       <StatusBar barStyle="dark-content" backgroundColor="white" />
 
-     
-
       <FlatList
       data= {offers}
       keyExtractor={(item) => item.id.toString()}
+
       ListHeaderComponent={()=> (
          /* header part */
         <View className="flex-row w-full justify-between items-center my-5 px-5">
