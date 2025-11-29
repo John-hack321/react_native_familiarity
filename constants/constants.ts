@@ -25,3 +25,9 @@ export const offers = [
         color: '#2E8B57'
     }
 ]
+
+// constants/authAssets.ts
+export const authImages = {
+    background: require("../assets/images/oath_background_graphics.png"),
+    logo: require("../assets/images/logo.png")
+}
