@@ -1,8 +1,9 @@
 import CustomButton from "@/constants/CustomButton";
 import CustomInput from "@/constants/CustomInput";
+import { createUser } from "@/lib/appWrite";
 import { Link, router } from "expo-router";
 import React, { useState } from "react";
-import { Text, View } from "react-native";
+import { Alert, Text, View } from "react-native";
 
 const SignUp= ()=> {
 
@@ -11,15 +12,21 @@ const SignUp= ()=> {
 
     const submit= async () => {
         
-            // if (!name || !form.email || !form.password) return Alert.alert(title:"Error", message: 'please enter a valid email address')
-            // call the appwrite signup function
+            if (!form.name || !form.email || !form.password) return Alert.alert("Error", 'please enter a valid email address')
 
             setIsSubmitting(true)
+
             try {
-               //  Alert.alert(title:'success', message: 'user signed in successfulu')
+
+                await createUser({
+                    name: form.name,
+                    email: form.email,
+                    password: form.password,
+                })
+
                 router.replace('/');
             } catch ( error : any) {
-               //  Alert.alert(title="Error", message: error.message)
+               Alert.alert("Error", error.message)
             }finally {
                 setIsSubmitting(false)
             }
@@ -60,11 +67,15 @@ const SignUp= ()=> {
             onPress={submit}
             />
 
-            <View className="items-center flex flex-row justify-center gap-4 mt-5">
-                <Text>Already have an account ?</Text>
+            <View className="flex-row items-center justify-center mt-5 flex-wrap gap-2">
+                <Text className="text-gray-700 ">
+                    Already have an account?{' '}
+                </Text>
                 <Link
-                 className="text-orange-500"
-                 href="/sign-in">Sign in</Link>
+                    className="text-orange-500 font-semibold "
+                    href="/sign-in">
+                    Sign in
+                </Link>
             </View>
 
         </View>

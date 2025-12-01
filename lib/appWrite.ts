@@ -1,5 +1,5 @@
-import { CreateUserParamas } from "@/type";
-import { Account, Avatars, Client, Databases, ID } from "react-native-appwrite";
+import { CreateUserParamas, SignInParams } from "@/type";
+import { Account, Avatars, Client, Databases, ID, Query } from "react-native-appwrite";
 
 export const appWriteConfig = {
     endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT,
@@ -30,15 +30,53 @@ export const createUser = async ({ name, email, password }: CreateUserParamas) =
             name
         )
         
+        
         if (!newAccount) throw new Error("Failed to create account");
-        
-        // You might want to create a session here too
-        // await account.createEmailPasswordSession(email, password);
-        
-        return newAccount;
+
+        await signIn({email, password}) // we will create this functionn
+
+        const avatarUrl= avatars.getInitialsURL(name)
+
+        const newUser = await databases.createDocument({
+            databaseId: appWriteConfig.databaseId,
+            collectionId: appWriteConfig.userCollectionId,
+            documentId: ID.unique(),
+            data: { email, name, accountId: newAccount.$id, avatar: avatarUrl},
+
+        })
+
+        return newUser
         
     } catch (error: any) {
         console.error("Error creating user:", error);
         throw new Error(error.message || "Failed to create user");
+    }
+}
+
+
+export const signIn= async ({email, password}: SignInParams)=> {
+    // create a user session on sigin
+
+    const session= await account.createEmailPasswordSession({email, password})
+}
+
+
+const getCurrentUser= async ()=> {
+    try {
+        const currentAccount = await account.get()
+        if (!currentAccount) {
+            throw new Error('No account found')
+        }
+
+        const currentUser = await databases.listDocuments(
+            appWriteConfig.databaseId,
+            appWriteConfig.userCollectionId,
+            [Query.equal('accountId', currentAccount.$id)]
+        )
+
+        return currentUser.documents[0]
+    } catch (e) {
+        console.log(`an error occurred: ${e}`)
+        throw new Error(e as string)
     }
 }

@@ -11,26 +11,14 @@ const CustomButton = ({
     return (
         <TouchableOpacity
             onPress={onPress}
-            style={{
-                borderRadius: 9999,
-                width: '100%',
-                paddingVertical: 16,
-                backgroundColor: '#f97316',
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginTop: 24,
-            }}
+            className="rounded-full w-full py-4 bg-orange-500 items-center justify-center mt-6"
             activeOpacity={0.7}
             disabled={isLoading}
         >
             {isLoading ? (
                 <ActivityIndicator size='small' color='white' />
             ) : (
-                <Text style={{
-                    color: 'white',
-                    fontSize: 16,
-                    fontWeight: '600'
-                }}>
+                <Text className="text-white text-base font-semibold">
                     {title}
                 </Text>
             )}

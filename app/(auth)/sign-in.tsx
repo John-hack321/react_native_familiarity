@@ -1,28 +1,35 @@
 import CustomButton from "@/constants/CustomButton";
 import CustomInput from "@/constants/CustomInput";
+import { signIn } from "@/lib/appWrite";
 import { Link, router } from "expo-router";
 import React, { useState } from "react";
-import { Text, View } from "react-native";
+import { Alert, Text, View } from "react-native";
 
 const SignIn= ()=> {
 
     const [isSubmitting, setIsSubmitting]= useState<boolean>(false)
     const [form, setForm]= useState({email: '', password: ''})
 
-    const submit= async () => {
-        
-            // if (!form.email || !form.password) Alert.alert(title:"Error", message: 'please enter a valid email address')
-            // call the appwrite signup function
+    const submit = async () => {
 
-            setIsSubmitting(true)
-            try {
-               //  Alert.alert(title:'success', message: 'user signed in successfulu')
-                router.replace('/');
-            } catch ( error : any) {
-               //  Alert.alert(title="Error", message: error.message)
-            }finally {
-                setIsSubmitting(false)
-            }
+        const {email, password}= form;
+
+        if (email || password) {
+            Alert.alert('Error', 'Please enter both email and password');
+            return;
+        }
+
+        setIsSubmitting(true);
+        try {
+
+            await signIn({email, password})
+            
+            router.replace('/');
+        } catch (error: any) {
+            Alert.alert('Error', error.message || 'An error occurred during sign in');
+        } finally {
+            setIsSubmitting(false);
+        }
     }
 
     return (
@@ -52,10 +59,10 @@ const SignIn= ()=> {
             onPress={submit}
             />
 
-            <View className="items-center flex flex-row justify-center gap-4 mt-5">
+            <View className="flex-row items-center justify-center mt-5 flex-wrap gap-2 ">
                 <Text>Don't have an account ?</Text>
                 <Link
-                 className="text-orange-500"
+                 className="text-orange-500 font-semibold"
                  href="/sign-up">Sign up</Link>
             </View>
 
