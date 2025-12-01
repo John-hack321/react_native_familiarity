@@ -8,7 +8,7 @@ import { TabBarIconProps } from "@/type";
 import { Ionicons } from "@expo/vector-icons";
 
 const TabBarIcon = ({focused, title, icon}: TabBarIconProps) => (
-    <View className=" items-center justify-center gap-1">
+    <View className="items-center justify-center gap-1 flex-1">
         <Ionicons
             name={icon}
             size={focused ? 24 : 20}
@@ -40,12 +40,14 @@ export default function Tablayout() {
                 position: "absolute",
                 marginBottom: 20,
                 backgroundColor: 'white',
-                shadowColor: '#1a1a1a ',
+                shadowColor: '#1a1a1a',
                 shadowOffset: {width: 0, height: 2},
                 shadowOpacity: 0.1,
                 shadowRadius: 4,
                 elevation: 5,
-            }
+                paddingTop: 16,
+                paddingBottom: 0,
+            },
         }}
         >
             <Tabs.Screen
@@ -89,7 +91,5 @@ export default function Tablayout() {
             />
 
         </Tabs>
-
-        
     )
 }
