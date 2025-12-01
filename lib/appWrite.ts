@@ -1,12 +1,17 @@
 import { CreateUserParamas, SignInParams } from "@/type";
-import { Account, Avatars, Client, Databases, ID, Query } from "react-native-appwrite";
+import { Account, Avatars, Client, Databases, ID, Query, Storage } from "react-native-appwrite";
 
 export const appWriteConfig = {
     endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT,
     platform: "com.react_learning.react_cont",
     projectId: process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID,
     databaseId: '692aae89000254303515',
-    userCollectionId: "user",
+    bucketId: '692e105300066e46469d',
+    userCollectionId: "user", 
+    categoriesCollectionId: "categories", 
+    menuCollectionId:"menu",
+    customizationsCollectionId: "customizations",
+    menuCustomizationsCollectionId: "menu_customizations",
 }
 
 const client = new Client()
@@ -19,6 +24,7 @@ client
 export const account = new Account(client)
 export const databases = new Databases(client)
 export const avatars = new Avatars(client)
+export const storage= new Storage(client)
 
 // User creation function
 export const createUser = async ({ name, email, password }: CreateUserParamas) => {
