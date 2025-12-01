@@ -29,3 +29,17 @@ export interface SignInParams {
     email: string;
     password: string;
 }
+
+export interface TabBarIconProps {
+    focused: boolean,
+    title: string,
+    icon: 
+        | "home"
+        | "search"
+        | "settings"
+        | "notifications"
+        | "person"
+        | "cart"
+        // Add more valid icon names as needed
+;
+}

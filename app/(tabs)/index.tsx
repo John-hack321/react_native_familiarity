@@ -1,4 +1,3 @@
-import { router } from "expo-router";
 import { FlatList, Pressable, StatusBar, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -11,9 +10,7 @@ import CartButton from "@/components/cartButton";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function Index() {
-  const isAuthenticated: boolean= false;
-  if (!isAuthenticated) router.replace('/sign-in')
-
+ 
   return (
     <SafeAreaView className="flex-1 bg-white">
       <StatusBar barStyle="dark-content" backgroundColor="white" />

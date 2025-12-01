@@ -1,10 +1,14 @@
+import { useAppSelector } from "@/appState/hooks";
 import { authImages } from "@/constants/constants";
 import { Slot } from "expo-router";
 import React from "react";
 import { Dimensions, Image, ImageBackground, KeyboardAvoidingView, Platform, ScrollView, StatusBar, View } from "react-native";
 import "../globals.css";
 
-export default function _layout(){
+export default function Authlayout(){
+    const isAuthenticated= useAppSelector((state)=> state.auth.isAuthenticated)
+   //  if (!isAuthenticated) return <Redirect href={'/'}/>
+
     return (
        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <StatusBar barStyle="light-content" backgroundColor="grey" />
@@ -17,8 +21,6 @@ export default function _layout(){
                     resizeMode="stretch"
                     
                 >
-                    
-                    
                 </ImageBackground>
                 {/* we will render our logo within this image too */}
                 <Image 

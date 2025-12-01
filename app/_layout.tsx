@@ -10,8 +10,8 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { useAppDispatch, useAppSelector } from "@/appState/hooks";
 import { fetchAuthenticatedUser } from "@/appState/slices/auth-slice";
 
-export default function RootLayout() {
-
+// we had to do this in order to avoid 
+function RootLayoutContent() {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector((state) => state.auth.isLoading);
 
@@ -19,8 +19,18 @@ export default function RootLayout() {
     dispatch(fetchAuthenticatedUser());
   }, [dispatch]);
 
-  if (isLoading) return null;
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#FE8C00" />
+      </View>
+    );
+  }
 
+  return <Stack screenOptions={{ headerShown: false }} />;
+}
+
+export default function RootLayout() {
   return (
     <Provider store={store}>
       <PersistGate 
@@ -31,8 +41,9 @@ export default function RootLayout() {
         } 
         persistor={persistor}
       >
-        <Stack screenOptions={{headerShown: false}}/>;
+        {/* ✅ RootLayoutContent is INSIDE Provider, so it can use hooks */}
+        <RootLayoutContent />
       </PersistGate>
     </Provider>
-  )
+  );
 }
