@@ -1,4 +1,3 @@
-
 export interface customInputProps {
     placeholder?: string;
     value?: string;

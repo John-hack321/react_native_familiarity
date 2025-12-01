@@ -61,7 +61,7 @@ export const signIn= async ({email, password}: SignInParams)=> {
 }
 
 
-const getCurrentUser= async ()=> {
+export const getCurrentUser= async ()=> {
     try {
         const currentAccount = await account.get()
         if (!currentAccount) {
@@ -75,6 +75,7 @@ const getCurrentUser= async ()=> {
         )
 
         return currentUser.documents[0]
+
     } catch (e) {
         console.log(`an error occurred: ${e}`)
         throw new Error(e as string)
