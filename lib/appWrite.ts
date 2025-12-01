@@ -13,19 +13,32 @@ const client = new Client()
 
 client
     .setEndpoint(appWriteConfig.endpoint!)
-    .setProject(appWriteConfig.platform)
+    .setProject(appWriteConfig.projectId!) // FIXED: Was using platform instead of projectId
     .setPlatform(appWriteConfig.platform)
 
-export const account= new Account(client)
-export const databases= new Databases(client)
-const avatars= new Avatars(client)
+export const account = new Account(client)
+export const databases = new Databases(client)
+export const avatars = new Avatars(client)
 
-// user creation function itself
-
-export const createUser= async ({name, email, password} : CreateUserParamas) => {
+// User creation function
+export const createUser = async ({ name, email, password }: CreateUserParamas) => {
     try {
-            const newAccount= await  account.create(ID.unique(), email= email, password= password, name= name )
-    } catch (e) {
-        throw new Error(e as string)
+        const newAccount = await account.create(
+            ID.unique(),
+            email,
+            password,
+            name
+        )
+        
+        if (!newAccount) throw new Error("Failed to create account");
+        
+        // You might want to create a session here too
+        // await account.createEmailPasswordSession(email, password);
+        
+        return newAccount;
+        
+    } catch (error: any) {
+        console.error("Error creating user:", error);
+        throw new Error(error.message || "Failed to create user");
     }
 }

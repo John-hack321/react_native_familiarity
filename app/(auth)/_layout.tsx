@@ -2,6 +2,7 @@ import { authImages } from "@/constants/constants";
 import { Slot } from "expo-router";
 import React from "react";
 import { Dimensions, Image, ImageBackground, KeyboardAvoidingView, Platform, ScrollView, StatusBar, View } from "react-native";
+import "../globals.css";
 
 export default function _layout(){
     return (
