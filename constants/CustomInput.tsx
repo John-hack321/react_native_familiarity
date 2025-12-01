@@ -29,8 +29,8 @@ const CustomInput= ({
                 placeholder={placeholder}
                 placeholderTextColor={'#888'}
                 className={cn(
-                    ` px-4 py-3 rounded-lg border-2 bg-white", 
-                    isFocused ? "border-orange-500" : "border-gray-300`
+                    ` px-4 py-3 rounded-lg border-2 bg-gray-900, 
+                    ${isFocused ? "border-orange-500" : "border-gray-300"}`
                 )}
             />
         </View>

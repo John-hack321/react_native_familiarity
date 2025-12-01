@@ -1,20 +1,28 @@
 import { CustomButtonProps } from "@/type";
+import cn from 'clsx';
 import React from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 
 const CustomButton= ({
     onPress,
     title= "submit",
-    style,
-    textStyle,
     leftIcon,
     isLoading= false
 }: CustomButtonProps)=> {
     return (
         <TouchableOpacity
-         className="rounded-full w-full py-1 bg-orange-500"
+        onPress={onPress}
+        className="rounded-full w-full py-1 bg-orange-500"
         >
-            <Text>{title}</Text>
+            <View>
+                {isLoading ? (
+                    <ActivityIndicator size='small' color='white'/>
+                ) : (
+                    <Text className={cn('text-white-100 text-sm')}>
+                        {title}
+                    </Text>
+                )}
+            </View>
         </TouchableOpacity>
     )
 }
