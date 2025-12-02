@@ -16,13 +16,13 @@ const initialState: AuthState = {
     error: null,
 }
 
-// ✅ FIXED: createAsyncThunk automatically gets dispatch via thunkAPI
-export const fetchAuthenticatedUser = createAsyncThunk(
+// ✅ Fetch authenticated user with proper typing
+export const fetchAuthenticatedUser = createAsyncThunk<User, void>(
     'auth/fetchAuthenticatedUser',
     async (_, { rejectWithValue }) => {
         try {
             const user = await getCurrentUser();
-            return user; // Return the user data
+            return user as User; // Return the user data with proper type
         } catch (error: any) {
             console.log(`An error occurred: ${error}`);
             return rejectWithValue(error.message || 'Failed to fetch user');
@@ -44,6 +44,13 @@ const authStateSlice = createSlice({
 
         setUser: (state, action: PayloadAction<User | null>) => {
             state.user = action.payload;
+        },
+
+        // ✅ Add logout action
+        logout: (state) => {
+            state.isAuthenticated = false;
+            state.user = null;
+            state.error = null;
         }
     },
 
@@ -57,20 +64,17 @@ const authStateSlice = createSlice({
             .addCase(fetchAuthenticatedUser.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.isAuthenticated = true;
-                // state.user = action.payload;
-                state.user!.name= action.payload.name
-                state.user!.email= action.payload.email
-                state.user!.avatar= action.payload.avatar
+                // ✅ FIXED: Now properly typed as User
+                state.user = action.payload;
             })
             .addCase(fetchAuthenticatedUser.rejected, (state, action) => {
                 state.isLoading = false;
                 state.isAuthenticated = false;
                 state.error = action.payload as string;
                 state.user = null;
-
             });
     }
 });
 
 export default authStateSlice.reducer;
-export const { setIsAuthenticated, setIsLoading, setUser } = authStateSlice.actions;
+export const { setIsAuthenticated, setIsLoading, setUser, logout } = authStateSlice.actions;
