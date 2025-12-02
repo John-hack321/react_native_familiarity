@@ -1,13 +1,6 @@
 import { getCurrentUser } from "@/lib/appWrite";
+import { User } from "@/type";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-export interface User {
-    name: string;
-    email: string;
-    accountId: string;
-    avatar: string;
-    $id?: string;
-}
 
 export interface AuthState {
     isAuthenticated: boolean;
@@ -68,7 +61,6 @@ const authStateSlice = createSlice({
                 state.user!.name= action.payload.name
                 state.user!.email= action.payload.email
                 state.user!.avatar= action.payload.avatar
-                state.user!.accountId= action.payload.accountId
             })
             .addCase(fetchAuthenticatedUser.rejected, (state, action) => {
                 state.isLoading = false;

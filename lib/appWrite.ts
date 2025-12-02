@@ -116,6 +116,8 @@ export const getCategories= async ()=> {
             appWriteConfig.databaseId,
             appWriteConfig.categoriesCollectionId,
         ) 
+
+        return categories.documents;
     } catch (error) {
         throw new Error(error as string)
     }

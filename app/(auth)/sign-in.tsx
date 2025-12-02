@@ -1,5 +1,6 @@
 import CustomButton from "@/constants/CustomButton";
 import CustomInput from "@/constants/CustomInput";
+import { signIn } from "@/lib/appWrite";
 import { Link, router } from "expo-router";
 import React, { useState } from "react";
 import { Alert, Text, View } from "react-native";
@@ -21,7 +22,7 @@ const SignIn= ()=> {
         setIsSubmitting(true);
         try {
 
-            // await signIn({email, password}) // just for testig purposes as we donot still have internet
+            await signIn({email, password}) // just for testig purposes as we donot still have internet
             
             router.replace('/');
         } catch (error: any) {

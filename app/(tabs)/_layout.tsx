@@ -1,9 +1,10 @@
 import React from "react";
 import "../globals.css";
 
-import { Tabs } from "expo-router";
+import { Redirect, Tabs } from "expo-router";
 import { Text, View } from "react-native";
 
+import { useAppSelector } from "@/appState/hooks";
 import { TabBarIconProps } from "@/type";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -23,7 +24,8 @@ const TabBarIcon = ({focused, title, icon}: TabBarIconProps) => (
 )
 
 export default function Tablayout() {
-    const isAuthenticated = true;
+    const isAuthenticated= useAppSelector((state)=> state.auth.isAuthenticated)
+    if (!isAuthenticated) return <Redirect href={'/sign-in'}/>
 
     return (
         <Tabs
