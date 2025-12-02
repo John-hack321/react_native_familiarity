@@ -40,6 +40,10 @@ export interface TabBarIconProps {
         | "notifications"
         | "person"
         | "cart"
-        // Add more valid icon names as needed
 ;
+}
+
+export interface GetMenuParams {
+    category: string;
+    query: string;
 }

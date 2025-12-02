@@ -1,4 +1,4 @@
-import { CreateUserParamas, SignInParams } from "@/type";
+import { CreateUserParamas, GetMenuParams, SignInParams } from "@/type";
 import { Account, Avatars, Client, Databases, ID, Query, Storage } from "react-native-appwrite";
 
 export const appWriteConfig = {
@@ -85,5 +85,38 @@ export const getCurrentUser= async ()=> {
     } catch (e) {
         console.log(`an error occurred: ${e}`)
         throw new Error(e as string)
+    }
+}
+
+
+// and that is we define a function for getting data from the appwrite database
+export const getMenu= async ({category, query}: GetMenuParams)=> {
+    try {
+        const queries: string[] = []
+
+        if (category) queries.push(Query.equal('categories', category))
+        if (query) queries.push(Query.equal('name', query))
+
+        const menus= await databases.listDocuments(
+            appWriteConfig.databaseId,
+            appWriteConfig.menuCollectionId,
+            queries,
+        )
+
+        return menus.documents;
+
+    } catch (error) {
+        throw new Error(error as string)
+    }
+}
+
+export const getCategories= async ()=> {
+    try {
+        const categories= await databases.listDocuments(
+            appWriteConfig.databaseId,
+            appWriteConfig.categoriesCollectionId,
+        ) 
+    } catch (error) {
+        throw new Error(error as string)
     }
 }
